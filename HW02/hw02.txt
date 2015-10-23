@@ -1,0 +1,91 @@
+Calvin Yung, cyung20@bu.edu
+
+Part A.
+
+1)
+
+b(x) = 12x + x2 + 64 = theta(x^2)
+c(x) = 2log(x) + x   = theta(x)
+d(x) = log(x) + 2    = theta(log(x))
+e(x) = sqrt(2x)      = theta(x^1/2)
+
+2)
+
+i(x) = 6x3 + 2x + 3     = ~(6x^3)
+j(x) = ((2^32)^64)x + 6 = ~((2^32)^64)x)
+k(x) = log(x) + 4x + 96 = ~(4x)
+l(x) = (4x^2 + 2x)/x    = ~(4x^2)
+m(x) = sqrt(4x)         = ~(2x^1/2)
+
+3)
+
+Original Array: 
+[4, 6, 9, 3, 1, 2]
+After swap:
+[4, 6, 3, 9, 1, 2]
+[4, 3, 6, 9, 1, 2]
+[3, 4, 6, 9, 1, 2]
+[3, 4, 6, 1, 9, 2]
+[3, 4, 1, 6, 9, 2]
+[3, 1, 4, 6, 9, 2]
+[1, 3, 4, 6, 9, 2]
+[1, 3, 4, 6, 2, 9]
+[1, 3, 4, 2, 6, 9]
+[1, 3, 2, 4, 6, 9]
+[1, 2, 3, 4, 6, 9]
+
+4)
+Original Array:
+[9, 6, 4, 2, 3, 1]
+After swap:
+[1, 6, 4, 2, 3, 9]
+[1, 2, 4, 6, 3, 9]
+[1, 2, 3, 6, 4, 9]
+[1, 2, 3, 4, 6, 9]
+[1, 2, 3, 4, 6, 9]
+[1, 2, 3, 4, 6, 9]
+
+
+Part B
+
+1) theta(n^2): the number of counts is the square of n.
+n  count
+1  1
+2  4
+3  9
+4  16
+5  25
+
+2) theta(0.5n^2 + 0.5)
+n  count
+1  1
+2  3
+3  6
+4  10
+5  15
+
+3) theta(n^3): the number of counts is the cube of n.
+n  count
+1  1
+2  8
+3  27
+4  64
+5  125
+
+4) theta(2^(n-1))
+n  count
+1  1
+2  2
+4  3
+8  4
+16 5
+
+5) theta()
+n  # of swaps
+1  1
+2  1
+3  3
+4  6
+5  10
+6  15
+7  21

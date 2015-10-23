@@ -1,0 +1,128 @@
+class Collection implements Collectable {  
+    private int [] A = new int[10]; 
+    private int next = 0;  
+    
+    // insert a new int at the end of the list -- may run off the end of the array if it is full!
+    
+    public void insert(int k) { 
+        if (next == 0) {
+            A[next] = k;
+        } else if (k < A[next - 1]) {
+            for (int i = next; i >= 0; --i) {
+                if (i == 0) {
+                    A[0] = k;
+                    break;
+                }
+                A[i] = A[i - 1];
+                if (k >= A[i - 1]) {
+                    A[i] = k;
+                    break;
+                } 
+            }
+        } else {
+            A[next] = k;
+        }
+        ++next;
+        
+        if (next == A.length) {
+            resize();
+        }
+    } 
+    
+    // Delete the first instance of a given int by scanning from left; if find the int, then
+    // moves every later element left one slot
+    
+    public void delete(int k) {   
+        shrink();
+        for(int i = 0; i < next; ++i) {
+            if(A[i] == k) {     
+                for(int j = i + 1; j < next; ++j) {
+                    A[j-1] = A[j];
+                }
+                --next;           
+                break;           
+            }
+        }      
+    } 
+    
+    /*
+     * Shrinks the array to half size when the Collection is less than 1/4th full
+     */
+    public void shrink() {
+        if (A.length != 10 && (next - 1) < (0.25 * A.length)) {
+            int[] C = new int[A.length / 2];
+            for(int i = 0; i < C.length; ++i) {
+                C[i] = A[i];
+            }
+            A = C;
+        } else {
+            return;
+        }
+    }
+    
+    /* 
+     * This method uses binary search to check if the called integer is a member of the array.
+     * This code is based on Professor Snyder's code provided at: 
+     * http://www.cs.bu.edu/fac/snyder/cs112/CodeExamples/BinarySearch.java
+     */
+    
+    public boolean member(int k) {  
+        boolean found = false;
+        int left = 0;            
+        int right = next - 1; 
+        
+        while (left <= right && !found) {
+            int middle = (left + right) / 2;  
+            if (A[middle] == k) {
+                return true;
+            } else if (k < A[middle]) {
+                right = middle - 1;
+            } else {
+                left = middle + 1; 
+            }
+        }
+        return false;         
+    }
+    
+    /*
+     * This method shows the entire array and places a "|" at the end of the elements that
+     * are actually stored.
+     */
+    
+    public void list() {
+        System.out.print("[");
+        for(int i = 0; i < A.length; ++i) {
+            if(i == next)
+                System.out.print(" | " + A[i]);
+            else if(i == 0)
+                System.out.print(A[i] );
+            else 
+                System.out.print(", " + A[i] );
+        }
+        System.out.println("]");         
+    }
+    
+    /* 
+     * Creates a new array twice the size of the original if the original is already full and another value
+     * is attempting to be inserted into that array. This also moves every element over into the same index.
+     * This code is based on Professor Snyder's code provided at: 
+     * http://www.cs.bu.edu/fac/snyder/cs112/CodeExamples/StackClient.java
+     */
+    
+    public void resize() {
+        int[] B = new int[2 * A.length];
+        for(int i = 0; i < A.length; ++i) {
+            B[i] = A[i];
+        }
+        A = B;
+    }
+    
+    public int size() {
+        return next;
+    }
+    
+    public boolean isEmpty() {
+        return (next == 0);
+    }
+} 
+

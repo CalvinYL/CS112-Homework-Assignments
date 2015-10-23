@@ -1,0 +1,372 @@
+/* File: BigInt.java
+ * Date: 2/15/14
+ * Author:  Wayne Snyder (snyder@bu.edu)
+ * Class: CS 112, Spring 2014
+ * Purpose: This is the template for HW 04, a class which is a container for several static methods
+ *          for adding arrays of integers which represent large integers.
+ */
+
+import java.util.Arrays;
+
+public class BigInt  { 
+   
+   private static boolean recursiveOn = true;     // just a flag to test iterative and recursive adds
+                                                  // when a client uses add, it will be the recursive one.
+   
+   // returns true iff s is a non-empty string of characters of digits, e.g., '0', '1', ...., '9'
+   
+   public static boolean legalBigInt(String s) {
+       if (s.length() < 1) {
+           return false;
+       }
+
+       for (int i = 0; i < s.length(); i++) {
+           if (s.charAt(i) < '0' || s.charAt(i) > '9') {
+               return false;
+           }
+       }
+       
+       return true;
+   }
+   
+   // turns a String of digits into a reversed array of Integers (one Integer = one digit)
+   
+   public static Integer[] stringToArray(String s) {  
+      Integer[] arr = new Integer[s.length()];
+      int indexArr = 0;
+      for (int i = s.length() - 1; i >= 0; i--) {
+          int n = (int) s.charAt(i);
+          arr[indexArr] = n - 48; 
+          indexArr++;
+      }
+      return arr;
+   }
+   
+   // returns the string representation of a BigInt array
+   
+   public static String arrayToString(Integer[] A) {
+       String str = "";
+       for (int i = A.length - 1; i >= 0; i--) {
+           int n = A[i];
+           str += String.valueOf(n);
+       }
+       return str;
+   }
+   
+   // just a wrapper for testing both iterative and recursive methods
+   
+   public static Integer[] add(Integer[] A, Integer[] B) {
+      if(recursiveOn)
+         return addRecursive(A,B);
+      else
+         return addIterative(A,B); 
+   }
+   
+   // Creates a new array with size n, copies the values of the array passed in the parameter
+   // over into the new array, and returns the array.
+   
+   private static Integer[] newArray(Integer[] A, int n) {
+       Integer[] arr = new Integer[n];
+       for (int i = 0; i < A.length; i++) {
+           arr[i] = A[i];
+       }
+       
+       for (int i = A.length; i < n; i++) {
+           arr[i] = 0;
+       }
+       
+       return arr;
+   }
+   
+   // Add big Integers A and B represented as reversed arrays of digits, and return the sum in same form; 
+   // assumes neither is empty array, since started as legal integers
+   // This one is iterative, next one will be recursive
+   
+   private static Integer[] addIterative(Integer[] A, Integer[] B) {
+       int n = 0;
+       int carry = 0;
+       
+       if (A.length == B.length) {
+           n = A.length;
+       } else if (A.length > B.length) {
+           n = A.length;
+           B = newArray(B, n);
+       } else {
+           n = B.length;
+           A = newArray(A, n);
+       }
+       
+       Integer[] C = new Integer[n];
+       for (int i = 0; i < n; i++) {
+           if (A[i] + B[i] >= 10) {
+               C[i] = (A[i] + B[i]) % 10 + carry;
+               carry = (A[i] + B[i]) / 10;
+           } else {
+               C[i] = (A[i] + B[i] + carry) % 10;
+               carry = (A[i] + B[i] + carry) / 10;
+           }
+       }
+       
+       if (carry == 1) {
+           Integer[] D = new Integer[n + 1];
+           for (int i = 0; i < n; i++) {
+               D[i] = C[i];
+           }
+           D[n] = carry;
+           return D;
+       }
+       
+       return C;
+   }
+   
+   
+   //Wrapper method for recursArray
+   
+   public static Integer[] recursArray(Integer[] A, int n) {
+       Integer[] arr = new Integer[n];
+       return recursArrayHelper(A, arr, n, 0);
+   }
+   
+   // Creates a new array with size n, copies the values of the array passed in the parameter
+   // over into the new array, and returns the array.
+   
+   private static Integer[] recursArrayHelper(Integer[] A, Integer[] arr, int n, int i) {
+       if (i < A.length) {
+           arr[i] = A[i];
+           return recursArrayHelper(A, arr, n, i + 1);
+       } 
+       if (i >= A.length && i < n) {
+           arr[i] = 0;
+           return recursArrayHelper(A, arr, n, i + 1);
+       }
+       
+       return arr;
+   }
+   
+   // Wrapper method for oneMoreCarry
+   
+  
+   
+   
+   // Fields used specifically for addRecursive so they aren't reset
+   private static int length = 0;
+   private static int numCarry = 0;
+   
+   // Wrapper method for addRecursive
+   
+   public static Integer[] addRecursive(Integer[] A, Integer[] B) {
+       if (A.length == B.length) {
+           length = A.length;
+       } else if (A.length > B.length) {
+           length = A.length;
+           B = recursArray(B, length);
+       } else {
+           length = B.length;
+           A = recursArray(A, length);
+       }
+
+       Integer[] C = new Integer[length];
+       
+       return addRecursiveHelper(A, B, 0, C);
+   }
+   
+   // add big ints A and B represented as arrays of digits, and returns the sum in same form; 
+   // assumes neither is empty array, since started as legal integers
+   
+   private static Integer[] addRecursiveHelper(Integer[] A, Integer[] B, int i, Integer[] C) {
+       if (A.length == 0) {
+           return B;
+       }
+       
+       if (B.length == 0) {
+           return A;
+       }
+       
+       //if (i == length && numCarry == 1) {
+           //oneMoreCarry(C);
+           //for (i = 0; i < n; i++) {
+           //    D[i] = C[i];
+           //}
+           //D[n] = carry;
+           //return D;
+           
+       if (i < length) {
+           
+           if (A[i] + B[i] >= 10) {
+               C[i] = (A[i] + B[i]) % 10 + numCarry;
+               numCarry = (A[i] + B[i]) / 10;
+           } else {
+               C[i] = (A[i] + B[i] + numCarry) % 10;
+               numCarry = (A[i] + B[i] + numCarry) / 10;
+           }
+           
+           return addRecursiveHelper(A, B, i + 1, C);
+       } else {
+           return C;
+       }
+       
+   }
+   
+ 
+   
+   
+   
+// just a debugging print method for arrays
+   
+   private static void printArray(Integer[]A) {
+      for(int i = 0; i < A.length; ++i)
+         System.out.print(A[i]);
+      System.out.println(); 
+   }
+   
+// unit test
+   
+   public static void main(String [] args) {
+      
+      System.out.println("\nTesting legalBigInt....\n"); 
+      
+      System.out.println("Testing \"23\" .... should be \ntrue: \n" + legalBigInt("23")); 
+      System.out.println(); 
+      System.out.println("Testing \"\" ....  should be \nfalse: \n" + legalBigInt("")); 
+      System.out.println(); 
+      System.out.println("Testing \"-234\" ....  should be \nfalse: \n" + legalBigInt("-234"));
+      System.out.println(); 
+      System.out.println("Testing \"Hi!234\" ....  should be \nfalse: \n" + legalBigInt("Hi!234")); 
+      System.out.println(); 
+      System.out.println("Testing \"2312312312312312312312312398765433\" ....  should be \ntrue: \n" + legalBigInt("2312312312312312312312312398765433")); 
+      System.out.println(); 
+      System.out.println("\nTesting stringToArray....");    
+      Integer[] A = {4, 3, 2, 1}; 
+      
+      System.out.println("\n              .... should be\n54321:");   
+      A = stringToArray("12345"); 
+      printArray(A); 
+      System.out.println("\n              .... should be\n1:"); 
+      A = stringToArray("1"); 
+      printArray(A); 
+      System.out.println("\n              .... should be\n555555554444444433333333222222211111111:"); 
+      A = stringToArray("111111112222222333333334444444455555555"); 
+      printArray(A);
+      
+      System.out.println("\nTesting arrayToString...."); 
+      
+      A = stringToArray("12345"); 
+      System.out.println("\n           .... should be\n12345:");
+      System.out.println(arrayToString(A) ); 
+      System.out.println("\n           .... should be\n1:");
+      A = stringToArray("1"); 
+      System.out.println(arrayToString(A) ); 
+      System.out.println("\n           .... should be\n11111222223333344444555556666677777888889999900000:");
+      A = stringToArray("11111222223333344444555556666677777888889999900000"); 
+      System.out.println(arrayToString(A) );
+      
+      
+      
+      System.out.println("\nTesting addIterative...."); 
+      recursiveOn = false; 
+      int i = 2, j = 1, k = i+j; 
+      A = add(stringToArray(String.valueOf(i)), stringToArray(String.valueOf(j))); 
+      System.out.println("\n" + i + " + " + j + " = \n" + k +":");
+      System.out.println(arrayToString(A) );
+      
+      i = 2; j = 3; k = i+j;
+      A = add(stringToArray(String.valueOf(i)), stringToArray(String.valueOf(j))); 
+      System.out.println("\n" + i + " + " + j + " = \n" + k +":");
+      System.out.println(arrayToString(A) ); 
+      
+      i = 2349474; j = 482723; k = i+j;
+      A = add(stringToArray(String.valueOf(i)), stringToArray(String.valueOf(j))); 
+      System.out.println("\n" + i + " + " + j + " = \n" + k +":");
+      System.out.println(arrayToString(A) ); 
+      
+      
+      i = 9999; j = 1; k = i+j;
+      A = add(stringToArray(String.valueOf(i)), stringToArray(String.valueOf(j))); 
+      System.out.println("\n" + i + " + " + j + " = \n" + k +":");
+      System.out.println(arrayToString(A) ); 
+      
+      i = 99898; j = 0; k = i+j;
+      A = add(stringToArray(String.valueOf(i)), stringToArray(String.valueOf(j))); 
+      System.out.println("\n" + i + " + " + j + " = \n" + k +":");
+      System.out.println(arrayToString(A) ); 
+      
+      
+      j = 234947400; i = 482723; k = i+j;
+      A = add(stringToArray(String.valueOf(i)), stringToArray(String.valueOf(j))); 
+      System.out.println("\n" + i + " + " + j + " = \n" + k +":");
+      System.out.println(arrayToString(A) ); 
+      
+      
+      j = 9999; i = 1; k = i+j;
+      A = add(stringToArray(String.valueOf(i)), stringToArray(String.valueOf(j))); 
+      System.out.println("\n" + i + " + " + j + " = \n" + k +":");
+      System.out.println(arrayToString(A) ); 
+      
+      j = 99898; i = 0; k = i+j;
+      A = add(stringToArray(String.valueOf(i)), stringToArray(String.valueOf(j))); 
+      System.out.println("\n" + i + " + " + j + " = \n" + k +":");
+      System.out.println(arrayToString(A) );     
+      
+      A = add(stringToArray("987732099543217654287655"), stringToArray("1234512345123451234512345")); 
+      System.out.println("\n987732099543217654287655 + 1234512345123451234512345 = \n2222244444666668888800000:");
+      System.out.println(arrayToString(A) );   
+      
+      
+      
+      
+      
+      
+      
+           System.out.println("\nTesting addRecursive...."); 
+      recursiveOn = true; 
+      i = 2; j = 1; k = i+j; 
+      A = add(stringToArray(String.valueOf(i)), stringToArray(String.valueOf(j))); 
+      System.out.println("\n" + i + " + " + j + " = \n" + k +":");
+      System.out.println(arrayToString(A) );
+      
+      i = 2; j = 3; k = i+j;
+      A = add(stringToArray(String.valueOf(i)), stringToArray(String.valueOf(j))); 
+      System.out.println("\n" + i + " + " + j + " = \n" + k +":");
+      System.out.println(arrayToString(A) ); 
+      
+      
+      i = 2349474; j = 482723; k = i+j;
+      A = add(stringToArray(String.valueOf(i)), stringToArray(String.valueOf(j))); 
+      System.out.println("\n" + i + " + " + j + " = \n" + k +":");
+      System.out.println(arrayToString(A) ); 
+      
+      
+      i = 9999; j = 1; k = i+j;
+      A = add(stringToArray(String.valueOf(i)), stringToArray(String.valueOf(j))); 
+      System.out.println("\n" + i + " + " + j + " = \n" + k +":");
+      System.out.println(arrayToString(A) ); 
+      
+      i = 99898; j = 0; k = i+j;
+      A = add(stringToArray(String.valueOf(i)), stringToArray(String.valueOf(j))); 
+      System.out.println("\n" + i + " + " + j + " = \n" + k +":");
+      System.out.println(arrayToString(A) ); 
+      
+      
+      j = 234947400; i = 482723; k = i+j;
+      A = add(stringToArray(String.valueOf(i)), stringToArray(String.valueOf(j))); 
+      System.out.println("\n" + i + " + " + j + " = \n" + k +":");
+      System.out.println(arrayToString(A) ); 
+      
+      
+      j = 9999; i = 1; k = i+j;
+      A = add(stringToArray(String.valueOf(i)), stringToArray(String.valueOf(j))); 
+      System.out.println("\n" + i + " + " + j + " = \n" + k +":");
+      System.out.println(arrayToString(A) ); 
+      
+      j = 99898; i = 0; k = i+j;
+      A = add(stringToArray(String.valueOf(i)), stringToArray(String.valueOf(j))); 
+      System.out.println("\n" + i + " + " + j + " = \n" + k +":");
+      System.out.println(arrayToString(A) );     
+      
+      A = add(stringToArray("987732099543217654287655"), stringToArray("1234512345123451234512345")); 
+      System.out.println("\n987732099543217654287655 + 1234512345123451234512345 = \n2222244444666668888800000:");
+      System.out.println(arrayToString(A) );    
+   }
+   
+   
+}

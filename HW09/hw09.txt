@@ -1,0 +1,68 @@
+Calvin Yung, cyung20@bu.edu
+
+
+1a) Depth-first search:   A, B, D, C, E, F
+ b) Breadth-first search: A, B, C, D, E, F
+ c) Best-first search:    A, B, C, D, E, F
+ d) Depth-first search:   F, E, D, B, C, A
+ e) Breadth-first search: F, E, D, B, C, A
+
+
+2a) Depth-first search:   A, B, D, C, E
+ b) Breadth-first search: A, B, D, E, C
+ c) Best-first search:    A, B, D, E, C
+ d) Depth-first search:   E, B, D, C, A
+ e) Breadth-first search: E, B, A, D, C
+
+
+3a) Depth-first search:   3, 1, 2, 5, 8, 6, 4, 7
+ b) Breadth-first search: 3, 1, 5, 2, 4, 8, 6, 7
+ c) Best-first search:    3, 5, 8, 7, 6, 4, 2, 1
+
+
+4a.1) DPS recursive: A, E, F, G, B, C, D
+ a.2) DPS explicit stack: A, B, C, D, G, F, E
+      Stack after the vertex 6 is pushed on it:
+      +   +
+      | D |
+      | F |
+      | E |
+      +___+
+
+4b) Breadth-first search: A, E, B, F, C, G, D
+
+4c.1) DPS recursive: G, F, E, D, B, C, A
+ c.2) DPS explicit stack: G, F, E, D, B, C, A
+
+4d) Breadth-first search: G, F, E, D, B, C, A
+
+
+5a.1) DPS recursive: A, B, C, F, G, D, E
+ a.2) DPS explicit stack: A, B, C, D, F, G, E
+
+5b) Breadth-first search: A, B, C, F, D, E, G
+
+5c.1) DPS recursive: G, D, B, F, E, A, C
+ c.2) DPS explicit stack: G, D, B, F, E, A, C
+
+5d) Breadth-first search: G, D, B, F, E, A, C
+
+
+6) A topological sort is not possible because there
+   is a cycle between B, C, and D.
+
+
+7) The code prints: B D G F E C A
+   Topological ordering: A C E F G D B
+
+
+8) A topological sort is not possible because there 
+   is a cycle between A, C, and B.
+
+
+9) The code prints: D B C A G F E
+   Topological ordering: E F G A C B D
+
+
+
+

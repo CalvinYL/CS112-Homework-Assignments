@@ -1,0 +1,134 @@
+/*
+ * TermFrequencyTable.java
+ * 
+ * This is a separate chaining table which will store the words from two Strings
+ * so one can calculate the cosine similarity of the two.
+ * 
+ * Lab 10 Answers:
+ * 2) Cosine Similarity: 0.89443
+ * 3b) They have a cosine similarity of 1, so they are completely identical.
+ * 3c) They still have a cosine similarity of 1.
+ * 3d) They have a cosine similarity of 0.16984. They have a few similarities.
+ * 3e) They have a cosine similarity of 0.02951. They are not very similar.
+ * 
+ * Author: Calvin Yung, cyung20@bu.edu
+ * Date: April 20, 2014
+ */
+
+import java.util.*;
+import java.io.*;
+
+public class TermFrequencyTable {
+    
+    private static final int SIZE = 101;
+    private Node[] N = new Node[SIZE];
+    
+    private class Node {
+        String term;
+        int[] termFreq = new int[2];
+        Node next; 
+        
+        public Node(String term, int docNum) {
+            this.term = term;
+            termFreq[docNum]++;
+        }
+    }
+    
+    //hash function
+    public static int hash(String term) {
+        int sum = 0;
+        for (int i = 0; i < term.length(); i++) {
+            sum += term.charAt(i);
+        }
+        return (sum*1031) % SIZE;
+    }
+    
+    // inserts a string into a node and keeps count of how many times that string
+    // appears in a vector (determined by docNum)
+    public void insert(String t, int docNum) {
+        StringTokenizer st = new StringTokenizer(t); 
+        while (st.hasMoreTokens()) {
+            String token = st.nextToken();
+            N[hash(token)] = insertHelper(token, N[hash(token)], docNum);
+        }
+    }  
+    
+    // helper method for insert
+    public Node insertHelper(String t, Node n, int docNum) {
+        if (n == null) {
+            return new Node(t, docNum);
+        } else if (t.equals(n.term)) {
+            n.termFreq[docNum]++;
+            return n;
+        } else {
+            n.next = insertHelper(t, n.next, docNum);
+            return n;
+        }
+    }
+
+    // Cosine Similarity Calculator
+    public double cosineSimilarity() {
+        double topSum = 0;
+        double denomSumA = 0;
+        double denomSumB = 0;
+        
+        for (int i = 0; i < SIZE; i++) {
+            if (N[i] != null) {
+                topSum += cosineSimilarityHelperA(N[i]);
+                denomSumA += cosineSimilarityHelperB(N[i]);
+                denomSumB += cosineSimilarityHelperC(N[i]);
+            }
+        }
+        
+        double cosSim = topSum/((Math.sqrt(denomSumA) * Math.sqrt(denomSumB)));
+        return cosSim;
+    }
+            
+    
+    // Calculates the numerator of the cosine similarity equation: (Ai * Bi)
+    public double cosineSimilarityHelperA(Node n) {
+        int A = n.termFreq[0];
+        int B = n.termFreq[1];
+        
+        return (A * B);
+    }
+    
+    // Calculates the 'Ai' denominator of the cosine similarity equation: (Ai)^2
+    public double cosineSimilarityHelperB(Node n) {
+        int A = n.termFreq[0];
+        return (A * A);
+    }
+    
+    // Calculates the 'Bi' denominator of the cosine similarity equation: (Bi)^2
+    public double cosineSimilarityHelperC(Node n) {
+        int B = n.termFreq[1];
+        return (B * B);
+    }
+    
+    // resets each Node to null in the global Node N
+    public void reset() {
+        N = new Node[SIZE];
+    }
+    
+    public static void main(String args[]) {
+        TermFrequencyTable T = new TermFrequencyTable();
+        T.insert("The man with the hat and the old dog ran", 0);
+        T.insert("The dog and the hat ran up to the man", 1);
+        System.out.println("Lab example Cosine Similarity: " + T.cosineSimilarity());
+        
+        T.reset();
+        
+        T.insert("Hello my name is Calvin", 0);
+        T.insert("Hello my name is Calvin", 1);
+        System.out.println("Same Terms Cosine Similarity: " + T.cosineSimilarity());
+        
+        T.reset();
+        
+        T.insert("She consumed ten cupcakes", 0);
+        T.insert("He ate a piece of chocolate", 1);
+        System.out.println("No Common Terms Cosine Similarity: " + T.cosineSimilarity());
+        
+        
+    }
+    
+}

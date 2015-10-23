@@ -1,0 +1,48 @@
+Calvin Yung, cyung20@bu.edu
+
+1) False
+2) True
+3) "First In First Out" describes a queue and "Last In First Out" describes a stack.
+4) dequeue() is to pop() as enqueue() is to push()
+
+5) +   +
+   | 7 |
+   | 9 |
+   | 2 |
+   | 8 |
+   | 1 |
+   | 3 |
+   | 7 |
+   +---+
+
+6) +---------------+
+   | R | T | D | E |
+   +---------------+
+
+7) +-------------------+
+   | Z | W | Q | F | E |
+   +-------------------+
+
+8) Sequences 2, 3 and 4 cannot be printed.
+
+9) Sequences 3 and 4 cannot be printed.
+
+10) We are essentially taking the number in front of queue Q and putting it at the end
+    of queue Q after performing the operation.
+
+11) Nothing changes in priority queue Q since taking out 1 and putting it back into the
+    queue will simply move it to the very front again to maintain the numerical order 
+    of the queue.
+
+12) 
+
+public void swapTwo(Stack S) {
+    if( !S.isEmpty() && next > 1) {
+        int temp1 = S.pop();
+        int temp2 = S.pop();
+        S.push(temp1);
+        S.push(temp2);
+    } else {
+        return;
+    }
+}

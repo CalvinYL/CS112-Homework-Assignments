@@ -1,0 +1,157 @@
+Calvin Yung, cyung20@bu.edu
+
+Part A
+
+1)
+
++---------------------------+ 
+| 9 | 8 | 3 | 7 | 1 | 2 | 5 | 
++---------------------------+ 
+| 5 | 8 | 3 | 7 | 1 | 2 | 9 | 
++---------------------------+
+| 5 | 2 | 3 | 1 | 7 | 8 | 9 | 
++---------------------------+
+| 5 | 2 | 3 | 1 | 7 | 8 | 9 | 
++---------------------------+
+| 1 | 2 | 3 | 5 | 7 | 8 | 9 | 
++---------------------------+
+
+2)
+ 
++----------------------------------------+ 
+| 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 
++----------------------------------------+ 
+
+3) No because if the pivot is the exact middle number of an array, 
+   there will be fewer subproblems to sort.
+
+4)
+
++-----------------------+ 
+| 4 | 9 | 8 | 5 | 7 | 2 | 
++-----------------------+ 
+| 4 | 2 | 8 | 5 | 7 | 9 | 
++-----------------------+ 
+| 2 | 4 | 8 | 5 | 7 | 9 | 
++-----------------------+
+| 2 | 4 | 7 | 5 | 8 | 9 | 
++-----------------------+
+| 2 | 4 | 5 | 7 | 8 | 9 | 
++-----------------------+
+
+5)
+
++-------------------------------+ 
+| 9 | 5 | 3 | 2 | 1 | 8 | 7 | 4 | 
++-------------------------------+
++---------------+ +---------------+ 
+| 9 | 5 | 3 | 2 | | 1 | 8 | 7 | 4 | 
++---------------+ +---------------+
++---------------+ +---------------+ 
+| 2 | 3 | 5 | 9 | | 1 | 4 | 8 | 7 | 
++---------------+ +---------------+
++-------------------------------+ 
+| 1 | 2 | 3 | 4 | 5 | 7 | 8 | 9 | 
++-------------------------------+
+
+7)
+    
+public static int size(String s) {
+    if (s == null || s.equals("")) {
+        return 0;
+    }
+        
+    return 1 + size(s.substring(1));
+} 
+
+8)
+
+public static String noVowels(String s) {
+    if (s == null || s.equals("")) {
+        return "";
+    }
+        
+    String newS = s.substring(0, 1);
+    if (newS.equals("a") || newS.equals("e") || newS.equals("i") || newS.equals("o") || newS.equals("u")) {
+        return noVowels(s.substring(1));
+    } else {
+        return newS + noVowels(s.substring(1));
+    }
+}
+
+9)
+
+public static String reverse(String s) {
+    if (s == null || s.equals("")) {
+        return s;
+    }
+        
+    String first = s.substring(0, 1);
+    return reverse(s.substring(1)) + first;
+}  
+
+10) 
+
+public static boolean isSubstring(String s1, String s2) {
+    if (s2.equals("")) {
+        return false;
+    }
+        
+    if (s1.equals("")) {
+        return true;
+    }
+        
+    String s1First = s1.substring(0, 1);
+    String s2First = s2.substring(0, 1);
+    if (s1First.equals(s2First)) {
+        return isSubstring(s1.substring(1), s2.substring(1));
+    } else {
+        return isSubstring(s1, s2.substring(1));
+    }            
+}
+
+11)
+
+public static String insertInto(char c, int i, String s) {
+    return insertIntoHelper(c, i, s, 0);
+}
+    
+public static String insertIntoHelper(char c, int i, String s, int count) {
+    if (i == 0) {
+        return s;
+    }
+        
+    String first = s.substring(0, 1);
+    String s1 = "" + c;
+    if (i == count) {
+        s = s.substring(0, i) + s1 + s.substring(i);
+        return s;
+    } 
+        
+    return insertIntoHelper(c, i, s.substring(1) + first, count + 1);
+}
+
+12)
+
+public static String replace(String a, String b, String s) {
+    return replaceHelper(a, b, s, 0, 0);
+}
+    
+public static String replaceHelper(String a, String b, String s, int i, int j) {
+    if (s.equals("")) {
+        return s;
+    }
+        
+    if (a.equals("")) {
+        s = s.substring(0, j - i) + b + s.substring(j - i);
+        return s;
+    }
+        
+    String aFirst = a.substring(0, 1);
+    String sFirst = s.substring(0, 1);
+    if (aFirst.equals(sFirst)) {
+        return replaceHelper(a.substring(1), b, s.substring(1), i + 1, j + 1);
+    } else {
+        return replaceHelper(a, b, s.substring(1), i + 1, j);
+    } 
+}

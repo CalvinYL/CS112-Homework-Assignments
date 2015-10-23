@@ -1,0 +1,148 @@
+Calvin Yung, cyung20@bu.edu
+
+Part A
+
+1a)
+
+mysteryA(2) calls mysteryA(4)
+    mysteryA(4) calls mysteryA(16)
+        mysteryA(16) calls mysteryA(256)
+            mysteryA(256) returns 256
+
+
+1b)
+
+mysteryB(0, 1) calls mysteryB(1, 1)
+    mysteryB(1, 1) calls mysteryB(2, 2)
+        mysteryB(2, 2) calls mysteryB(3, 4)
+            mysteryB(3, 4) calls mysteryB(4, 7)
+                mysteryB(4, 7) calls mysteryB(5, 11)
+                    mysteryB(5, 11) returns 5
+
+
+1c)
+
+mysteryC(arr, 0, 1) calls mysteryC(arr, 1, 1)
+    mysteryC(arr, 1, 1) calls mysteryC(arr, 2, 2)
+        mysteryC(arr, 2, 2) calls mysteryC(arr, 3, 4)
+            mysteryC(arr, 3, 4) calls mysteryC(arr, 4, 7)
+                mysteryC(arr, 4, 7) calls mysteryC(arr, 5, 11)
+                    mysteryC(arr, 5, 11) --> {0, 0, 0, 0, 0}
+                mysteryC(arr, 4, 7) --> {0, 0, 0, 0, 7}
+            mysteryC(arr, 3, 4) --> {0, 0, 0, 4, 7}
+        MysteryC(arr 2, 2) --> {0, 0, 2, 3, 7}
+    mysteryC(arr, 1, 1) --> {0, 1, 2, 4, 7}
+mysteryC(arr, 0, 1) --> {1, 1, 2, 4, 7}
+
+
+2a)
+
+public static int loopA(int a, int b) {
+    if (b > 100) {
+        return b;
+    }
+        
+    return loopA(a, b + (b*a));
+}
+
+
+2b)
+
+public static int loopB(int[] arr) {
+    return loopBHelper(arr, 0);
+}
+    
+public static int loopBHelper(int[] arr, int i) {
+    if (i >= arr.length) {
+        return 0;
+    }
+
+    arr[i]+=1;
+    return loopBHelper(arr, i+=1);
+}
+
+
+2c)
+
+public static int loopC(int[] a, int[] b) {
+    return loopCHelper(a, b, 0);
+}
+    
+public static int loopCHelper(int[] a, int[] b, int i) {
+    if (i >= a.length || i >= b.length) {
+        return 0;
+    }
+
+    a[i] += b[i];
+    return loopCHelper(a, b, i+=1);        
+}
+
+Part B
+
+1)
+
+public static int[] removeDups(int[] arr) {
+    int n = arr.length;
+    int n2 = arr.length;
+    int k = 0;
+        
+    for (int i = 0; i < n; i++) {
+        for (int j = i + 1; j < n; j++) {
+            if(arr[i] == arr[j]) {     
+                for(int m = i + 1; m < n; ++m) {
+                    arr[m-1] = arr[m];
+                }
+                k++;
+                n--;
+            }
+        }
+    }
+        
+    int[] arr2 = new int[n2-k];
+    for (int i = 0; i < n2-k; i++) {
+        arr2[i] = arr[i];
+    }
+        
+    return arr2;
+}
+
+
+3)
+
+public static int find(int[] arr, int k) {
+    return findHelper(arr, k, 0);
+}
+    
+    
+public static int findHelper(int[] arr, int k, int i) {
+    if (i < 0 || i >= arr.length) {
+        return -1;
+    }
+    if (arr[i] == k) {
+        return i;
+    } else {
+        return findHelper(arr, k, i + 1);
+    }
+}
+
+
+4)
+
+public static int count(int[] arr, int k) {
+    return countHelper(arr, k, 0, 0);
+}
+    
+    
+public static int countHelper(int[] arr, int k, int i, int counter) {
+    if (i < 0 || i >= arr.length) {
+        return counter;
+    }
+    if (arr[i] == k) {
+        return countHelper(arr, k, i += 1, counter+=1);
+    } else {
+        return countHelper(arr, k, i += 1, counter);
+    }
+        
+}
+
+

@@ -1,0 +1,7 @@
+interface Queueable {
+    public void enqueue(int k);
+    public void dequeue();
+    public void list();
+    public boolean isEmpty();
+}
+    

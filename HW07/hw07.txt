@@ -1,0 +1,95 @@
+Calvin Yung, cyung20@bu.edu
+
+
+1a) Reverse pre-order (V R L): FGIHBDECA
+ b) Post-order (L R V): ACEDBHIGF
+ c) Breadth-first: FBGADICEH
+   
+
+2) Output: AABCCDEAABCCDEFGHHI
+
+
+3a) +   +
+    | E |
+    | C |
+    | A |
+    +---+
+ b) This is a reverse pre-order traversal.
+ c) Moving visit(p) to the end of the loop doesn't change anything. It would still be 
+      a reverse pre-order traversal.
+
+
+      2   1   0
+4a) +---+---+---+ 
+    | E | C | I |
+    +---+---+---+ 
+ b) This is a normal pre-order traversal.
+
+
+5) Order in which nodes are dequeued from the priority queue: F, B, A, D, C, E, G, I, H
+   
+
+6) List of keys that caused a node to be split: 20, 12, 6
+   List of the leaves of the final tree: 4, 10, 15, 19, 25
+
+
+7) List of the leaves of the final tree: 1, 3, 5, 7
+
+
+8a) The final tree will be a balanced tree (perfect triangle).
+ b) It will consist of 2-nodes.
+ c) Leaves: 1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25, 27, 29, 31
+
+
+9a) True, because in order for a tree to be a 2-3 tree, all paths from 
+      the root to a leaf must have the same length (hence the subtrees 
+      will need to have the same height).
+ b) False, because a node in a 2-3 tree can only have either 0, 2, or 3
+      children; it cannot have only one.
+ c) True, because if you calculate it by plugging in n, the height is correct
+      after the fractional part is truncated.
+ d) False, because there are cases where the path is simply between
+      the root and a 3-node and thus does not need to go through a 2-node.
+ e) False, because the maximum number of times a split can occur is 2log2n.
+
+
+10a) Heap as an array: 
+     *---------------------------------*
+     | 1 | 2 | 8 | 3 | 11 | 9 | 14 | 6 | 
+     *---------------------------------*
+  b) Heap's array after removing the root twice:
+     *-------------------------*
+     | 2 | 3 | 8 | 14 | 11 | 9 | 
+     *-------------------------*
+
+
+11) Heapsort
+
+*---------------------------------*
+| 1 | 2 | 8 | 3 | 11 | 9 | 14 | 6 | Original (minHeap)
+*---------------------------------* 
+| 6 | 2 | 8 | 3 | 11 | 9 | 14 | 1 | Swap 1 and 6
+*---------------------------------*
+| 2 | 3 | 8 | 6 | 11 | 9 | 14 | 1 | Rearranged
+*---------------------------------*
+| 14 | 3 | 8 | 6 | 11 | 9 | 2 | 1 | Swap 2 and 14
+*---------------------------------* 
+| 3 | 6 | 8 | 14 | 11 | 9 | 2 | 1 | Rearranged
+*---------------------------------*
+| 9 | 6 | 8 | 14 | 11 | 3 | 2 | 1 | Swap 3 and 9
+*---------------------------------*
+| 6 | 9 | 8 | 14 | 11 | 3 | 2 | 1 | Rearranged
+*---------------------------------*
+| 11 | 9 | 8 | 14 | 6 | 3 | 2 | 1 | Swap 6 and 11
+*---------------------------------*
+| 8 | 9 | 11 | 14 | 6 | 3 | 2 | 1 | Rearranged
+*---------------------------------* 
+| 14 | 9 | 11 | 8 | 6 | 3 | 2 | 1 | Swap 8 and 14
+*---------------------------------* 
+| 9 | 14 | 11 | 8 | 6 | 3 | 2 | 1 | Rearranged
+*---------------------------------* 
+| 11 | 14 | 9 | 8 | 6 | 3 | 2 | 1 | Swap 9 and 11
+*---------------------------------* 
+| 14 | 11 | 9 | 8 | 6 | 3 | 2 | 1 | Final
+*---------------------------------* 
+

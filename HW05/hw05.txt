@@ -1,0 +1,97 @@
+Calvin Yung, cyung20@bu.edu
+
+1)  Head -> 3 -> -7 -> 13 -> .
+
+    p -> 16 -> 14 -> .
+
+2) head.next.next is 13.
+
+3) p.next.next.item is null.
+
+4) 4 and 14
+
+5) Location 11 would be changed to 0.
+
+6) Location 9 would be changed to 4.
+
+7) Location 8 would be changed to 14.
+
+8) p -> -7 -> 14 -> .
+
+9) 4, 6, 12, and 16
+
+10) Output
+      2
+
+11) Output
+     7 2
+
+12) Output
+     2 2
+
+13) Output
+      5
+      2
+      7
+
+14) Output
+    B A A A A
+
+15) Output
+    5 7 * 2 3
+
+16) Output
+    3 5 7 7 5 7 7
+
+17)
+
+public static int countOdd(Node p) {
+    if (p == null) {
+        return 0;
+    } else if (p.item % 2 == 1) {
+        return 1 + countOdd(p.next);
+    } else {
+        return countOdd(p.next);
+    }
+}
+
+18)
+
+public static int weirdCount(Node p) {
+    if (p == null) {
+        return 0;
+    } else if (p.item % 2 == 0 && p.item < 0) {
+        return weirdCount(p.next);
+    } else if (p.item % 2 == 0) {
+        return 2 + weirdCount(p.next);
+    } else if (p.item < 0) {
+        return weirdCount(p.next) - 2;
+    } else {
+        return weirdCount(p.next);
+    }
+}
+
+19)
+
+public Node addToEnd(int k, Node p) {
+    if (p == null) {
+        return new Node(k, null);
+    } else {
+        p.next = addToEnd(k, p.next);
+        return p;
+    }
+}
+
+20)
+
+public Node deleteEven(Node p) {
+    if (p == null) {
+        return new Node(k, null);
+    } else if (p.item % 2 == 0) {
+        return p.next
+    } else {
+        p.next = delete(k, p.next);
+        return p;
+    }
+}
+

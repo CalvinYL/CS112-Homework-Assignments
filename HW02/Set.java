@@ -1,0 +1,156 @@
+/* File: Set.java
+ * Date: 2/8/14
+ * Author: Calvin Yung, cyung20@hotmail.com
+ * Class: CS 112, HW02
+ * Purpose: Creates an unordered Set with no duplicates
+ */
+
+@SuppressWarnings("unchecked") 
+
+    public class Set<Item> implements Setable<Item> {       
+    private Item [] A;
+    private int next;  
+    private int size;
+    private int nextItem;
+    
+    // default constructor that creates an empty array
+    public Set() { 
+        this.A = (Item[]) new Object[10]; 
+        this.next = 0;
+        this.size = 0;
+        this.nextItem = 0;
+    }                 
+    
+    // constructor which takes an array of Items and inserts each into the set as an initialization step
+    public Set(Item[] A) {  
+        Item[] SetA = (Item[]) new Object[A.length];
+        for (int i = 0; i < A.length; i++) {
+            SetA[next] = A[i];
+            next++;
+            size++;
+        }
+        this.next = next;
+        this.size = size;
+        this.nextItem = nextItem;
+    }
+    
+    // checks if Item k is already in the Set. If it is not, this inserts k into the set
+    public void insert(Item k) {
+        if (size == A.length) {
+            resize();
+        }
+        
+        int check = 0;
+        for (int i = 0; i < A.length; i++) {
+            if (A[i].equals(k)) {
+                check = 1;
+            }
+        }
+        
+        if (check == 1) {
+            A[next] = k;
+            next++;
+        } else {
+            return;
+        }
+        
+    }
+    
+    // checks if Item k is in the Set and deletes it.
+    public void delete(Item k) {
+        int indexDelete = 0;
+        for (int i = 0; i < A.length; i++) {
+            if (A[i].equals(k)) {
+                indexDelete = i;
+            } else {
+                return;
+            }
+        }
+        
+        for (int i = indexDelete; i < next; i++) {
+            A[i] = A[i + 1];
+        }
+        next--;
+        
+    }
+    
+    // checks if Item k is in the Set
+    public boolean member(Item k) {
+        boolean found = false;
+        for(int i = 0; i < next; ++i) {
+            if(A[i] == k) {
+                found = true; 
+                break;
+            }
+        }
+        return found;
+    }
+    
+    // checks if the Set is empty
+    public boolean isEmpty() {
+        return (next == 0);
+    }
+    
+    // Returns size of the array or Set
+    public int size() {
+        return next;
+    }
+    
+    // Unifies both sets into one with no duplicates and no particular order
+    public Set<Item> union(Set<Item> S) {
+        Set<Item> SetB = new Set<Item>();
+        
+        return S;
+    }
+    
+    public Set<Item> intersection(Set<Item> S) {
+        return S;
+    }
+    
+    public Set<Item> difference(Set<Item> S) {
+        return S;
+    }
+    
+    public boolean equals(Set<Item> S) {
+        return true;
+    }
+    
+    public void reset() {
+    }
+    
+    public boolean hasNext() { 
+        return true;
+    }
+    
+    public Item next() {
+        return null;
+    }
+    
+    // doubles the dize of the array if no more space
+    public void resize() {
+        Item[] B = (Item[]) new Object[2 * A.length];
+        for(int i = 0; i < A.length; ++i) {
+            B[i] = A[i];
+        }
+        A = B;
+    }
+}
+
+// interface, put in file here so don't lose it!
+// this interface is just to check if you have satisfied the assignment, and the
+// only place you should use it is in the first line of the class, as shown above.
+
+interface Setable<Item> {
+    public void insert(Item k);       // if k is already in the set, do nothing; else insert it
+    public void delete(Item k);       // if k is NOT in the set, do nothing; else delete it
+    public boolean member(Item k);    // return true if k is in set, false otherwise
+    public boolean isEmpty();         // return true if set has no members, false otherwise
+    public int size();                // return number of items in the set
+    public Set<Item> union(Set<Item> S);          // create a new Set consisting of the union of this set and S
+    public Set<Item> intersection(Set<Item> S);   // create a new Set consisting of the intersection of this set and S
+    public Set<Item> difference(Set<Item> S);     // create a new Set consisting of the set difference of this set and S (this - S)
+    public boolean equals(Set<Item> S);           // return true if this set is equal to S, and false otherwise
+    public void reset();              // reset the explicit iterator (see below)
+    public boolean hasNext();         // return true if there is a next item in the iteration of this set
+    public Item next();               // return the next item in the iteration of all items in the set
+}

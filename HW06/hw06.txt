@@ -1,0 +1,91 @@
+Calvin Yung, cyung20@bu.edu
+
+1a) Size = 9
+ b) Depth of the node D = 2
+ c) Height = 3
+ d) Length of the path from B to E = 2
+ e) List of all leaf nodes: A, C, E, H
+
+
+2a) Output
+      A
+      B
+      C
+      D
+      E
+      F
+      G
+      H
+      I
+
+
+2b) Output
+      I
+      H
+      G
+      F
+      E
+      D
+      C
+      B
+      A
+
+
+3a) F, B, D, C
+ b) 4 comparisons (F, G, I, H)
+ c) 3 comparisons (F, B, A)
+ d) Worst-case is 4 comparisons (reaches bottom of tree)
+ e) Average-case = (1 + 2 + 2 + 3 + 3 + 3 + 4 + 4 + 4) / 9
+                 = 26/9
+                 = 2.88 comparisons
+
+
+4a) A, BA, FB, H, K
+ b) A, E, H
+ c) A, C, I
+
+
+5a)
+
+public static int sizeBST(Node p) {
+    if (p == null) {
+        return 0;
+    } else {
+        return 1 + sizeBST(p.right) + sizeBST(p.right);
+    }
+}
+
+
+5b)
+
+public static int heightBST(Node p) {
+    if (p == null) {
+        return -1;
+    } else {
+        return max(heightBST(p.left), heightBTS(p.right));
+    }
+}
+
+private static int max(int i, int j) {
+    if (i > j) {
+        return i;
+    } else {
+        return j;
+    }
+}
+
+
+6a) Pathological tree (worst-cases):
+      i) D, C, B, A
+     ii) A, B, D, C
+    iii) C, D, B, A
+     iv) B, C, D, A
+      v) B, A, C, D
+
+
+6b) Complete binary search tree:
+      i) D, C, B, A, E, F, G
+     ii) D, C, B, A, F, E, G
+    iii) D, B, A, C, E, F, G
+     iv) C, B, A, D, F, E, G
+      v) E, D, B, A, C, F, G

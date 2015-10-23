@@ -1,0 +1,189 @@
+Calvin Yung, cyung20@bu.edu
+
+1a)
+
+   +--------+
+0  | beer   |
+   +--------+
+1  |        |
+   +--------+
+2  | apples |
+   +--------+
+3  |        |
+   +--------+     +---------+
+4  | bread  | --> | diapers |
+   +--------+     +---------+
+5  | eggs   |
+   +--------+
+
+The worst-case lookup is 2 comparisons.
+The average-case lookup time is 1 comparison.
+
+
+1b) 
+
+   +--------+
+0  |        |
+   +--------+     +---------+
+1  | pears  | --> | flour   |
+   +--------+     +---------+
+2  |        |
+   +--------+     +---------+
+3  | sugar  | --> | chicken | 
+   +--------+     +---------+
+4  | bread  |
+   +--------+
+5  | eggs   |
+   +--------+
+
+delete(1) deleted the key 'beef'.
+delete(76) did nothing.
+
+
+1c)  The worst-case lookup is 2 comparisons.
+     The average-case lookup time is ~1 comparison.
+
+
+1d) Sequence of keys: 0, 6, 12, 18, 24, 30, 36...
+                      (all multiples of 6 would all be hashed to location 0).
+
+
+1e) Theta(M)
+
+
+1f) Theta(1)
+
+
+2a)
+
+   +-----+
+0  | -1  |
+   +-----+     
+1  |  4  | 
+   +-----+     
+2  | -1  |
+   +-----+    
+3  |  1  | 
+   +-----+
+4  | -1  |
+   +-----+
+5  | -1  |
+   +-----+
+6  |  2  |
+   +-----+     
+7  |  28 | 
+   +-----+     
+8  | -1  |
+   +-----+    
+9  | -1  | 
+   +-----+
+10 | -1  |
+   +-----+
+
+
+2b) Worst case time for all keys: Theta(1) or 1 comparison
+
+
+2c) 
+
+   +-----+
+0  | -1  |
+   +-----+     
+1  |  4  | 
+   +-----+     
+2  |  63 |
+   +-----+    
+3  |  1  | 
+   +-----+
+4  |  23 |
+   +-----+
+5  |  19 |
+   +-----+
+6  |  2  |
+   +-----+     
+7  |  28 | 
+   +-----+
+8  |  13 |
+   +-----+    
+9  | -1  | 
+   +-----+
+10 | -1  |
+   +-----+
+
+
+2d) Worst-case time for 19: 4 comparisons
+
+
+2e) Average-case time: 1.75
+
+
+2f)
+
+   +-----+
+0  | -1  |
+   +-----+     
+1  |  4  | 
+   +-----+     
+2  |  63 |
+   +-----+    
+3  | -2  | 
+   +-----+
+4  |  5  |
+   +-----+
+5  |  19 |
+   +-----+
+6  |  2  |
+   +-----+     
+7  |  28 | 
+   +-----+
+8  |  13 |
+   +-----+    
+9  | -1  | 
+   +-----+
+10 | -1  |
+   +-----+
+
+
+2g) Worst-cast (linear probing): Theta(N)
+
+
+Lab questions
+
+
+1) Sequential LC and Folding performed better (lowest minimum look up cost).
+   The "industrial-strength" hash functions near the end were not extremely 
+   necessary because the other hash functions, besides silly, had a nice
+   distribution of keys.
+   Naive add was the simplest hash function to do reasonably well because the
+   keys were spread out rather nicely.
+
+
+2a) All the buckets are of equal length and has only one line in the histogram.
+    This happened because M is even and the LCMultiplier is small.
+
+
+2b) The buckets are spread out with spaces between them and there is no histogram.
+    because the larger the LCMultiplier, the more space will be between the buckets.
+
+
+2c) They are more spread out and have balanced histograms.
+    This is because prime numbers give the best results in terms of spreading out
+    the keys.
+
+
+3a) The sequence of words create a linked-list in the hash-table, which is evident
+    in both the minimum and maximum lookup costs, which are equal to the number of keys.
+
+
+3b) The result is the same as the 3a. It created a linked-list and its minimum and
+    mamimum lookup costs are equal to the number of keys.
+
+
+3c) The hash tables and histograms of the industrial strength functions
+    are all consistent with one another.
+
+
+
+
+
+
